@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Game with Timer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-image: url("https://ahaslides.com/wp-content/uploads/2022/05/Feature-10.png"); 
+            background-size: cover; 
+            background-position: center;
+            background-repeat: no-repeat; 
+        }
+
+        .quiz-container {
+            background-color: rgba(255, 255, 255, 0.9); 
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            width: 400px;
+            text-align: center;
+        }
+
+        h1, h2 {
+            margin: 10px 0;
+        }
+
+        .question {
+            font-size: 20px;
+            margin: 15px 0;
+        }
+
+        .answers {
+            list-style: none;
+            padding: 0;
+        }
+
+        .answers li {
+            margin: 10px 0;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #2e86de;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%; 
+            max-width: 300px; 
+            text-align: center;
+        }
+
+        #timer {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        #exit_btn{
+        background-color:  #00ffcc; 
+        color: black;
+        margin-left: 0px;
+         border: none;
+         border-radius: 5px;
+         cursor: pointer;
+         margin-top: 10px;
+}
+#exit_btn:hover{
+background-color: #00e6b8;
+}
+    </style>
+</head>
+<body>
+
+    <div class="quiz-container">
+        <h1>Quiz Game</h1>
+        <div id="timer">Time: 15</div>
+        <div id="question-container">
+            <div class="question" id="question">Question text</div>
+            <ul class="answers" id="answers"></ul>
+        </div>
+        <button id="next" style="display: none;">Next</button>
+        <button id="exit_btn">Quit</button>
+        <h2 id="score" style="display: none;"></h2>
+    </div>
+
+    <script>
+        const quizQuestions = [
+            {
+                question: "What is the capital of France?",
+                answers: [
+                    { text: "Paris", correct: true },
+                    { text: "London", correct: false },
+                    { text: "Berlin", correct: false },
+                    { text: "Madrid", correct: false }
+                ]
+            },
+            {
+                question: "Who wrote 'Hamlet'?",
+                answers: [
+                    { text: "William Shakespeare", correct: true },
+                    { text: "Mark Twain", correct: false },
+                    { text: "Charles Dickens", correct: false },
+                    { text: "Homer", correct: false }
+                ]
+            },
+            {
+                question: "What is the largest planet in our solar system?",
+                answers: [
+                    { text: "Jupiter", correct: true },
+                    { text: "Mars", correct: false },
+                    { text: "Earth", correct: false },
+                    { text: "Saturn", correct: false }
+                ]
+            },
+        ];
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let timeLeft = 15;
+        let timerInterval;
+        const timerElement = document.getElementById('timer');
+        const questionElement = document.getElementById('question');
+        const answersElement = document.getElementById('answers');
+        const nextButton = document.getElementById('next');
+        const scoreElement = document.getElementById('score');
+        function startTimer() {
+                 timeLeft = 15;
+            timerElement.textContent = `Time: ${timeLeft}`;
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                timerElement.textContent = `Time: ${timeLeft}`;
+                if (timeLeft === 0) {
+                    clearInterval(timerInterval);
+                    showNextQuestion();
+                }
+            }, 1000);
+        }
+
+        function showQuestion() {
+            clearInterval(timerInterval); // Reset timer if applicable
+            startTimer();
+
+            const currentQuestion = quizQuestions[currentQuestionIndex];
+            questionElement.textContent = currentQuestion.question;
+            answersElement.innerHTML = '';
+
+            currentQuestion.answers.forEach(answer => {
+                const button = document.createElement('button');
+                button.textContent = answer.text;
+                button.classList.add('answer-button');
+                button.onclick  = () => selectAnswer(answer.correct);
+                const li = document.createElement('li');
+                li.appendChild(button);
+                answersElement.appendChild(li);
+            });
+                             }
+
+        function selectAnswer(isCorrect) {
+            clearInterval(timerInterval);
+            if (isCorrect) {
+                score++;
+            }
+            nextButton.style.display = 'block';
+        }
+
+        function showNextQuestion() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < quizQuestions.length) {
+                nextButton.style.display = 'none';
+                showQuestion();
+            } else {
+                endQuiz();
+            }
+        }
+
+        function endQuiz() {
+            clearInterval(timerInterval);
+            questionElement.style.display = 'none';
+            answersElement.style.display = 'none';
+            timerElement.style.display = 'none';
+            nextButton.style.display = 'none';
+            scoreElement.textContent = `Your score: ${score} / ${quizQuestions.length}`;
+            scoreElement.style.display = 'block';
+        }
+
+        nextButton.addEventListener('click', () => {
+            nextButton.style.display = 'none';
+            showNextQuestion();
+        });
+
+        showQuestion();
+
+        // quit button
+document.getElementById("exit_btn").addEventListener("click", function() {
+	if (confirm("Are you sure you want to quit?")) {
+		var newFile = "games.html";
+		window.location.href = newFile;
+	}
+});
+    </script>
+
+</body>
+</html>

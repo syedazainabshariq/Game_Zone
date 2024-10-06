@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - GameZone</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+        integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #1c1c1e;
+            color: #ffffff;
+        }
+
+        header {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #333;
+            padding: 20px;
+        }
+
+        .logo h1 {
+            color: #00ffcc;
+            font-size: 2em;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+        }
+
+        nav ul li {
+            margin-left: 20px;
+            position: relative;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: #ffffff;
+            font-size: 1.2em;
+            padding-bottom: 5px;
+        }
+
+        nav ul li::after {
+            content: '';
+            display: block;
+            height: 2px;
+            width: 0;
+            background: #00ffcc;
+            transition: width 0.3s;
+            position: absolute;
+            left: 0;
+            bottom: 0;
+        }
+
+        nav ul li:hover::after {
+            width: 100%;
+        }
+
+        main {
+            padding: 50px 20px;
+            text-align: center;
+        }
+
+        h2 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 1.2em;
+            margin-bottom: 20px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        footer {
+            background-color: #333;
+            padding: 20px;
+            text-align: center;
+            width: 100%;
+        }
+
+        footer p {
+            margin-bottom: 10px;
+        }
+
+        footer ul {
+            list-style: none;
+        }
+
+        footer ul li {
+            display: inline;
+            margin-left: 20px;
+        }
+
+        footer ul li a {
+            text-decoration: none;
+            color: #00ffcc;
+        }
+        p {
+            color: white;
+            font-size: 20px;
+        }
+
+        .socialicons {
+            margin-left: -20px;
+            margin-top: 30px;
+        }
+
+        .socialicons i {
+            margin-left: 20px;
+            padding: 10px;
+            color: white;
+            border: 1px solid white;
+            border-radius: 50px;
+        }
+        .apps i{
+            color: white;
+            font-size:2rem;
+            padding-top: 10px;
+            margin-left: 20px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <h1>GameZone</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="./home.html">Home</a></li>
+                <li><a href="./games.html">Games</a></li>
+                <li><a href="./about.html">About</a></li>
+                <li><a href="./contact.html">Contact</a></li>
+                <li><a href="login.html" class="login-btn">Login</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h2>About Us</h2>
+        <p>Welcome to GameZone, your number one source for all things gaming. We're dedicated to giving you the very best of games, with a focus on dependability, customer service, and uniqueness.</p>
+        
+        <p>Founded in 2024, GameZone has come a long way from its beginnings. When we first started out, our passion for gaming drove us to do tons of research, so that GameZone can offer you the world's most advanced games. We now serve customers all over the world, and are thrilled that we're able to turn our passion into our own website.</p>
+        
+        <p>We hope you enjoy our games as much as we enjoy offering them to you. If you have any questions or comments, please don't hesitate to contact us.</p>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 GameZone. All Rights Reserved.</p>
+        <ul>
+            <li><a href="#privacy">Privacy Policy</a></li>
+            <li><a href="#terms">Terms of Service</a></li>
+        </ul>
+        <div class="apps">
+            <a href=""><i class="fa-brands fa-apple"></i></a>
+            <a href=""><i class="fa-brands fa-google-play"></i></a>
+            </div>
+        <div class="socialicons">
+            <p>
+                <a href=""><i class="fa-brands fa-facebook"></i></a>
+                <a href=""><i class="fa-brands fa-instagram"></i></a>
+                <a href=""><i class="fa-brands fa-twitter"></i></a>
+                <a href=""><i class="fa-brands fa-youtube"></i></a>
+            </p>
+    </footer>
+</body>
+</html>

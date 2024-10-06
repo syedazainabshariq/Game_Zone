@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Memory Card Game</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #242322;
+      /* background-image: url("https://th.bing.com/th/id/R.a5cd89a044a797c26c616741a6816610?rik=hxF76M45m1IesQ&riu=http%3a%2f%2fwallpapercave.com%2fwp%2fWV8QiL1.jpg&ehk=Ei0tvmimuODVA4Pdr7E2LTtPXqm%2foR%2bhxT9Ny9wa7U0%3d&risl=&pid=ImgRaw&r=0"); */
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+
+    #game-board {
+      display: grid;
+      grid-template-columns: repeat(4, 150px);
+      grid-gap: 10px;
+    }
+
+    .card {
+      width: 150px;
+      height: 150px;
+      background-color: #54ded9;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 0;
+      cursor: pointer;
+      border-radius: 10px;
+    }
+
+    .card img {
+      display: none;
+      width: 100px;
+      height: 100px;
+    }
+
+    .card.flipped img {
+      display: block;
+    }
+
+    .card.flipped {
+      background-color: #fff;
+    }
+
+    #congratulations {
+      display: none;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: rgba(0, 0, 0, 0.8);
+      color: #fff;
+      padding: 20px;
+      border-radius: 10px;
+    }
+    #exit_btn{
+background-color:  #00ffcc; 
+color: black;
+margin-right: 0px;
+margin-top: 700px;
+/* padding: 10px 30px;
+border: none; */
+}
+#exit_btn:hover{
+background-color: #00e6b8;
+}
+button {
+  padding: 15px 30px;
+            background-color: #2e86de;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+  </style>
+</head>
+
+<body>
+  <div id="game-board">
+  </div>
+ 
+  <div id="congratulations">
+    <h1>Congratulations! You matched all the cards!</h1>
+  </div>  
+  <div class="button">
+    <button id="exit_btn">Quit</button>
+  </div>
+  <script>
+    const cardsArray = [
+      { name: 'apple', img: 'https://static.vecteezy.com/system/resources/previews/012/900/002/original/red-apple-cartoon-illustration-free-vector.jpg' },
+      { name: 'banana', img: 'https://th.bing.com/th/id/R.891e28d560aee67c042dc42ec39c64a3?rik=8utiI7m%2fqSYNKQ&riu=http%3a%2f%2fclipart-library.com%2fdata_images%2f84296.png&ehk=TIQ132k58v1oJvjOhe%2bhS0EoCYP6cT65f%2f2mYTYGWtQ%3d&risl=&pid=ImgRaw&r=0' },
+      { name: 'cherry', img: 'https://th.bing.com/th/id/OIP.R0aX9Tc3O-afTtrsc1J8_gHaHa?rs=1&pid=ImgDetMain' },
+      { name: 'grapes', img: 'https://th.bing.com/th/id/OIP.CveGiQPdCGYAnBWhPdQHJAHaH9?rs=1&pid=ImgDetMain' },
+      { name: 'lemon', img: 'https://img.lovepik.com/element/40069/8293.png_1200.png' },
+      { name: 'orange', img: 'https://png.pngtree.com/png-clipart/20220320/original/pngtree-orange-vector-cartoon-illustration-png-image_7457233.png' },
+      { name: 'peach', img: 'https://static.vecteezy.com/system/resources/previews/016/182/118/original/peach-cartoon-icon-peach-isolated-on-white-background-free-vector.jpg' },
+      { name: 'watermelon', img: 'https://th.bing.com/th/id/R.48b0d15b075d911723b3a80ee2ccc022?rik=VW8gPw50AR1DCA&riu=http%3a%2f%2fclipartmag.com%2fimages%2ffree-watermelon-clipart-34.png&ehk=nmJxRM26CUZtvTPaZ7VcfxTlm182t1cSIr0PvVT7mZg%3d&risl=&pid=ImgRaw&r=0' }
+    ];
+  
+    let gameCards = [...cardsArray, ...cardsArray];
+    gameCards = gameCards.sort(() => 0.5 - Math.random());
+
+    const gameBoard = document.getElementById('game-board');
+    const congratsMessage = document.getElementById('congratulations');
+    let matchedCards = 0;
+    const totalMatches = cardsArray.length;
+
+    gameCards.forEach(card => {
+      const cardElement = document.createElement('div');
+      cardElement.classList.add('card');
+      cardElement.dataset.name = card.name;
+
+      const imgElement = document.createElement('img');
+      imgElement.src = card.img;
+      cardElement.appendChild(imgElement);
+
+      gameBoard.appendChild(cardElement);
+    })  ;
+
+    let firstCard = null;
+    let secondCard = null;
+    let lockBoard = false;
+
+    function flipCard() {
+      if (lockBoard) return;
+      if (this === firstCard) return;
+
+      this.classList.add('flipped');
+
+       if (!firstCard) {
+        firstCard = this;
+        return;
+      }
+
+      secondCard = this;
+      checkForMatch();
+     }
+
+    function checkForMatch() {
+      const isMatch = firstCard.dataset.name === secondCard.dataset.name;
+      isMatch ? disableCards() : unflipCards();
+    }
+
+    function disableCards() {
+      firstCard.removeEventListener('click', flipCard);
+      secondCard.removeEventListener('click', flipCard);
+
+      matchedCards++;
+      if (matchedCards === totalMatches) {
+        setTimeout(() => {
+          congratsMessage.style.display = 'block';
+        }, 500);
+      }
+
+      resetBoard();
+    }
+
+    function unflipCards() {
+      lockBoard = true;
+
+      setTimeout(() => {
+        firstCard.classList.remove('flipped');
+        secondCard.classList.remove('flipped');
+        resetBoard();
+      }, 1000);
+    }
+
+    function resetBoard() {
+      [firstCard, secondCard] = [null, null];
+      lockBoard = false;
+    }
+
+    document.querySelectorAll('.card').forEach(card => card.addEventListener('click', flipCard));
+
+
+    // quit button
+document.getElementById("exit_btn").addEventListener("click", function() {
+	if (confirm("Are you sure you want to quit?")) {
+		var newFile = "games.html";
+		window.location.href = newFile;
+	}
+});
+  </script>
+</body>
+
+</html>

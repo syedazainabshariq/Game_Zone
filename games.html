@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Games - GameZone</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+        integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- <link rel="stylesheet" href="./styles.css"> -->
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #1c1c1e;
+            color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 80px;
+        }
+
+        header {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #333;
+            padding: 20px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 10;
+        }
+
+        .logo h1 {
+            color: #00ffcc;
+            font-size: 2em;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: #ffffff;
+            font-size: 1.2em;
+        }
+
+        footer ul li a {
+            text-decoration: none;
+            color: #00ffcc;
+        }
+
+        main {
+            padding: 20px;
+            max-width: 1200px;
+            width: 100%;
+        }
+
+        .game-grid {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .game-card {
+            background-color: #222;
+            padding: 20px;
+            border-radius: 10px;
+            width: 220px;
+            text-align: center;
+            transition: transform 0.2s;
+        }
+
+        .game-card img {
+            width: 100%;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+
+        .game-card h3 {
+            margin-bottom: 10px;
+            font-size: 1.5em;
+        }
+
+        .game-card p {
+            font-size: 1em;
+            margin-bottom: 10px;
+        }
+
+        .play-btn {
+            padding: 10px 20px;
+            background-color: #00ffcc;
+            color: #000;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 1em;
+            transition: background-color 0.3s ease;
+            display: inline-block;
+            /* Ensures the button behaves like a block */
+        }
+
+        .play-btn:hover {
+            background-color: #00e6b8;
+        }
+        footer {
+            background-color: #333;
+            padding: 20px;
+            text-align: center;
+            width: 100%;
+        }
+
+        footer p {
+            margin-bottom: 10px;
+        }
+
+        footer ul {
+            list-style: none;
+        }
+
+        footer ul li {
+            display: inline;
+            margin-left: 20px;
+        }
+
+        footer ul li a {
+            text-decoration: none;
+            color: #00ffcc;
+        }
+
+        .box1 {
+            display: flex;
+            margin: 50px;
+        }
+
+        .number_card {
+            margin: 50px;
+        }
+
+        .typing_card {
+            margin: 50px;
+        }
+
+        .typing_changing {
+            margin-right: 70px;
+            padding-top: 50px;
+            padding-bottom: 50px;
+        }
+
+        .number_changing {
+            padding-top: 50px;
+            padding-bottom: 50px;
+        }
+
+        .word_changing {
+            margin-left: 70px;
+            margin-top: 70px;
+            padding-top: 15px;
+        }
+        .stars_changing{
+            margin-left: 70px;
+            margin-top: 70px;
+            padding-top: 15px;
+        }
+
+        p {
+            color: white;
+            font-size: 20px;
+        }
+
+        .socialicons {
+            margin-left: -20px;
+            margin-top: 30px;
+        }
+
+        .socialicons i {
+            margin-left: 20px;
+            padding: 10px;
+            color: white;
+            border: 1px solid white;
+            border-radius: 50px;
+        }
+        .apps i{
+            color: white;
+            font-size:2rem;
+            padding-top: 10px;
+            margin-left: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="logo">
+            <h1>GameZone</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="./home.html">Home</a></li>
+                <li><a href="./games.html">Games</a></li>
+                <li><a href="./about.html">About</a></li>
+                <li><a href="./contact.html">Contact</a></li>
+                <li><a href="login.html" class="login-btn">Login</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h2>Our Games</h2>
+        <div class="game-grid">
+            <div class="game-card">
+                <img src="https://play-lh.googleusercontent.com/KZTO1L6r8CzWlg2InJoU_ndRAuvYiaS-35MyYdDPeeVCPNVfM9SBY2qRGjvvADmDIR8"
+                    alt="Game 1" width="200px" height="180px">
+                <h3>X-O</h3>
+                <p>Exciting and adventurous!</p>
+                <a href="./tic tac toe.html" class="play-btn">Play</a> <!-- Link to the game page -->
+            </div>
+            <div class="game-card">
+                <img src="https://i.etsystatic.com/27759810/r/il/f178f4/3661501502/il_fullxfull.3661501502_3dzo.jpg"
+                    alt="Game 2" width="200px" height="180px">
+                <h3>Memory Card</h3>
+                <p>Battle your way to victory!</p>
+                <a href="./memorycard.html" class="play-btn">Play</a> <!-- Link to the game page -->
+            </div>
+            <div class="game-card">
+                <img src="https://th.bing.com/th/id/R.d08f65c6abe6f4ffec93427242de496c?rik=R%2bpm08UXJazzqA&pid=ImgRaw&r=0c"
+                    alt="Game 3" width="200px" height="180px">
+                <h3>Quiz Time</h3>
+                <p>Thrilling and fun for all ages!</p>
+                <a href="./quiz.html" class="play-btn">Play</a> <!-- Link to the game page -->
+            </div>
+            <div class="game-card">
+                <img src="./images/DALL·E 2024-09-29 12.03.05 - A playful background for a scramble word game. The design features colorful, scattered letters in various fonts and sizes, arranged in a way that look.webp"
+                    alt="Game 4" width="200px" height="180px"> <!-- Replace with actual image URL -->
+                <h3>Word Scramble</h3>
+                <p>Explore the words!</p>
+                <a href="./WordScramble.html" class="play-btn">Play</a> <!-- Link to the game page -->
+            </div>
+        
+        <div class="box1">
+            <div class="typing_changing">
+                <div class="game-card">
+                    <img src="./images/typing speed 2.jpeg" alt="Game 5" width="200px" height="180px">
+                    <h3>Typing Speed</h3>
+                    <p>Check Your Typing Speed!</p>
+                    <a href="./typingspeed.html" class="play-btn">Play</a> <!-- Link to the game page -->
+                </div>
+            </div>
+            <div class="number_changing">
+                <div class="game-card">
+                    <img src="./images/number guessing 2.jpeg" alt="Game 6" width="200px" height="180px">
+                    <h3>Number Guessing</h3>
+                    <p>Guess the Number!</p>
+                    <a href="./numberguessing.html" class="play-btn">Play</a> <!-- Link to the game page -->
+                </div>
+
+            </div>
+            <div class="word_changing">
+                <div class="game-card">
+                    <img src="./images/wordguessing  2.jpeg" alt="Game 6" width="200px" height="180px">
+                    <h3>Word Guessing</h3>
+                    <p>Guess the Word!</p>
+                    <a href="./wordguessing.html" class="play-btn">Play</a> <!-- Link to the game page -->
+                </div>
+            </div>
+<div class="stars_changing">
+            <div class="game-card">
+                <img src="./images/star pic.jpeg"
+                    alt="Game 1" width="200px" height="180px">
+                <h3>Catch the Stars!</h3>
+                <p>Exciting and Fun!</p> 
+                <a href="./stars.html" class="play-btn">Play</a> <!-- Link to the game page -->
+            </div>
+        </div>
+        </div>
+
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 GameZone. All Rights Reserved.</p>
+        <ul>
+            <li><a href="#privacy">Privacy Policy</a></li>
+            <li><a href="#terms">Terms of Service</a></li>
+        </ul>
+        <div class="apps">
+            <a href=""><i class="fa-brands fa-apple"></i></a>
+            <a href=""><i class="fa-brands fa-google-play"></i></a>
+            </div>
+        <div class="socialicons">
+            <p>
+                <a href=""><i class="fa-brands fa-facebook"></i></a>
+                <a href=""><i class="fa-brands fa-instagram"></i></a>
+                <a href=""><i class="fa-brands fa-twitter"></i></a>
+                <a href=""><i class="fa-brands fa-youtube"></i></a>
+            </p>
+    </footer>
+</body>
+
+</html>

@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #242322;
+  }
+
+
+  .game-container {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    width: 400px;
+    text-align: center;
+  }
+
+  h1 {
+    margin-bottom: 20px;
+    color: white;
+  }
+
+  input {
+    padding: 10px;
+    width: 80%;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  }
+
+  button {
+    padding: 10px 20px;
+    background-color: #2e86de;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+
+  #result {
+    margin-top: 20px;
+    font-size: 20px;
+    color: green;
+  }
+
+  #giveUp {
+    background-color: #d9534f;
+  }
+
+  #text-to-type {
+    font-size: 24px;
+    color: black;
+    margin-bottom: 20px;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+
+  .head_number {
+    color: white;
+  }
+
+  .head_number {
+    color: white;
+  }
+
+  .footer_number h3 {
+    color: white;
+  }
+
+  #result-text {
+    color: white;
+  }
+
+  #exit_btn {
+    background-color: #00ffcc;
+    color: black;
+    margin-left: 30px;
+  }
+
+  #exit_btn:hover {
+    background-color: #00e6b8;
+  }
+
+  #word-to-guess {
+    color: white;
+    align-items: center;
+  }
+</style>
+
+<body>
+  <div id="wordguessing">
+    <div class="box">
+      <h1>Word Guessing Game</h1>
+      <p id="word-to-guess"></p>
+      <input id="guess-input" type="text" placeholder="Guess the word">
+      <button id="guess-button">Guess</button>
+      <button id="exit_btn">Quit</button>
+      <p id="result"></p>
+      <p id="attempts-left">Attempts left: 6</p>
+    </div>
+
+
+  </div>
+
+
+
+  <script>
+
+    const words = ['apple', 'banana', 'cherry', 'date', 'elderberry'];
+
+
+    const wordToGuess = words[Math.floor(Math.random() * words.length)];
+
+
+    let attemptsLeft = 6;
+    let guessedLetters = [];
+    let guessedWord = '';
+
+
+    document.getElementById('word-to-guess').textContent = '_ '.repeat(wordToGuess.length);
+
+
+    document.getElementById('guess-button').addEventListener('click', checkGuess);
+
+
+    function checkGuess() {
+      const guess = document.getElementById('guess-input').value.toLowerCase();
+
+
+      if (guess.length === 1) {
+
+        if (wordToGuess.includes(guess)) {
+
+          guessedLetters.push(guess);
+          updateWordDisplay();
+        } else {
+
+          attemptsLeft--;
+          document.getElementById('attempts-left').textContent = `Attempts left: ${attemptsLeft}`;
+        }
+      } else if (guess.length === wordToGuess.length) {
+
+        if (guess === wordToGuess) {
+
+          document.getElementById('result').textContent = 'Congratulations! You won!';
+          document.getElementById('guess-button').disabled = true;
+        } else {
+
+          attemptsLeft--;
+          document.getElementById('attempts-left').textContent = `Attempts left: ${attemptsLeft}`;
+        }
+      } else {
+        alert('Invalid guess. Please enter a single letter or the entire word.');
+      }
+
+
+      if (attemptsLeft === 0) {
+        document.getElementById('result').textContent = `Game over! The word was ${wordToGuess}.`;
+        document.getElementById('guess-button').disabled = true;
+      }
+
+
+      document.getElementById('guess-input').value = '';
+    }
+
+
+    function updateWordDisplay() {
+      const wordDisplay = [];
+      for (let i = 0; i < wordToGuess.length; i++) {
+        if (guessedLetters.includes(wordToGuess[i])) {
+          wordDisplay.push(wordToGuess[i]);
+        } else {
+          wordDisplay.push('_');
+        }
+      }
+      document.getElementById('word-to-guess').textContent = wordDisplay.join(' ');
+    }
+
+    // quit button
+    document.getElementById("exit_btn").addEventListener("click", function () {
+      if (confirm("Are you sure you want to quit?")) {
+        var newFile = "games.html";
+        window.location.href = newFile;
+      }
+    });
+  </script>
+</body>
+
+</html>

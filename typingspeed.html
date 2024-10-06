@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+     body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #242322;
+}
+
+
+        .game-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            width: 400px;
+            text-align: center;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            color: white;
+        }
+
+        input {
+            padding: 10px;
+            width: 80%;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #2e86de;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        #result {
+            margin-top: 20px;
+            font-size: 20px;
+            color: green;
+        }
+
+        #giveUp {
+            background-color: #d9534f;
+        }
+        #text-to-type{
+            
+  font-size: 24px;
+  color:black;
+  margin-bottom: 20px;
+  padding: 10px;
+  background-color: #f9f9f9; 
+  border: 1px solid #ccc;
+  border-radius: 5px; 
+}
+#exit_btn{
+background-color:  #00ffcc; 
+color: black;
+margin-left: 30px;
+}
+#exit_btn:hover{
+background-color: #00e6b8;
+}  
+
+</style>
+<body>
+    <div class="typing_card">
+        <div class="game-card">
+
+                <h1>Typing Speed Game</h1>
+                <div class="for_border">
+                <p id="text-to-type"></p>
+                <input id="input-field" type="text" placeholder="Type the text above">
+
+                <button id="start-button">Start</button>
+                <button id="exit_btn">Quit</button>
+                <p id="result"></p>
+           
+               
+    </div>
+    </div>
+    </div>
+    <script>
+        const textToType = document.getElementById('text-to-type');
+const inputField = document.getElementById('input-field');
+const startButton = document.getElementById('start-button');
+const result = document.getElementById('result');
+
+const texts = [
+  `The quick brown fox jumps over the lazy dog. The sun is shining brightly in the clear blue sky. The birds are singing their sweet melodies.`,
+  `Jackdaws love my big sphinx of quartz. The five boxing wizards jump quickly at dawn. Pack my box with five dozen liquor jugs.`,
+  `How vexingly quick waltzing zebras jump! The quick brown fox jumps over the lazy dog. The sun is shining brightly in the clear blue sky.`,
+  `The five boxing wizards jump quickly at dawn. Pack my box with five dozen liquor jugs. The quick brown fox jumps over the lazy dog.`,
+];
+
+
+let currentTime = 0;
+let typingTime = 0;
+let accuracy = 0;
+let started = false;
+
+
+function generateText() {
+  const randomIndex = Math.floor(Math.random() * texts.length);
+  return texts[randomIndex];
+}
+
+
+function calculateAccuracy(inputText, originalText) {
+  const inputArray = inputText.split('');
+  const originalArray = originalText.split('');
+  let correctChars = 0;
+
+  for (let i = 0; i < inputArray.length; i++) {
+    if (inputArray[i] === originalArray[i]) {
+      correctChars++;
+    }
+  }
+
+  return (correctChars / originalText.length) * 100;
+}
+
+
+function startGame() {
+  started = true;
+  currentTime = new Date().getTime();
+  inputField.value = '';
+  inputField.focus();
+  textToType.textContent = generateText();
+}
+
+
+function endGame() {
+  started = false;
+  typingTime = (new Date().getTime() - currentTime) / 1000;
+  accuracy = calculateAccuracy(inputField.value, textToType.textContent);
+  const speed = Math.round((inputField.value.length / typingTime) * 60);
+  result.textContent = `Time: ${typingTime} seconds, Accuracy: ${accuracy}%, Speed: ${speed} characters per minute`;
+}
+
+
+startButton.addEventListener('click', startGame);
+inputField.addEventListener('input', () => {
+  if (started && inputField.value === textToType.textContent) {
+    endGame();
+  }
+});
+// quit button
+document.getElementById("exit_btn").addEventListener("click", function() {
+	if (confirm("Are you sure you want to quit?")) {
+		var newFile = "games.html";
+		window.location.href = newFile;
+	}
+});
+
+
+
+    </script>
+</body>
+</html>

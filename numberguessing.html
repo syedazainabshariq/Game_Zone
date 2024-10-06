@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+     body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #242322;
+}
+
+
+        .game-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            width: 400px;
+            text-align: center;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            color: white;
+        }
+
+        input {
+            padding: 10px;
+            width: 80%;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #2e86de;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        #result {
+            margin-top: 20px;
+            font-size: 20px;
+            color: green;
+        }
+
+        #giveUp {
+            background-color: #d9534f;
+        }
+        #text-to-type{
+  font-size: 24px;
+  color:black;
+  margin-bottom: 20px;
+  padding: 10px;
+  background-color: #f9f9f9; 
+  border: 1px solid #ccc;
+  border-radius: 5px; 
+}
+        .head_number{
+            color: white;
+        }
+.head_number{
+    color: white;
+}
+.footer_number h3{
+color: white;
+}
+#result-text{
+    color: white;
+}
+#exit_btn{
+background-color:  #00ffcc; 
+color: black;
+margin-left: 30px;
+}
+#exit_btn:hover{
+background-color: #00e6b8;
+}
+    </style>
+</head>
+<body>
+    <div class="number_card">
+        <div class="game-card">
+            <h1> Guess The Number</h1><hr><br>
+            <div class="head_number">
+            <h3>Guess a number from 0 to 100 <br>
+            </h3>
+            <h4 id="result-text"></h4>
+            </div>
+            <div class="input_number">
+                <input id="input2_number" type="number"  placeholder="Guess a number">
+            <button id="nextButton">Check</button>
+            <button id="exit_btn">Quit</button>
+            </div>
+            <div class="footer_number">
+                <h3 id="attempts-text">Attempts left: 6</h3>
+            </div>
+            <script>
+                // number guessing game//
+
+const guessInput = document.getElementById('input2_number');
+const guessButton = document.getElementById('nextButton');
+const resultText = document.getElementById('result-text');
+const attemptsText = document.getElementById('attempts-text');
+
+let randomNumber = Math.floor(Math.random() * 100) + 1;
+let attempts = 6;
+function checkGuess() {
+  const userGuess = parseInt(guessInput.value);
+  if (isNaN(userGuess) || userGuess < 1 || userGuess > 100) {
+    resultText.textContent = 'Invalid input! Please enter a number between 1 and 100.';
+    return;
+  }
+  attempts--;
+  if (userGuess === randomNumber) {
+    resultText.textContent = ` Congratulations! You guessed the number in ${6 - attempts} attempts!`;
+    guessButton.disabled = true;
+  } else {
+    if (userGuess < randomNumber) {
+      resultText.textContent = 'Too low!';
+    } else {
+      resultText.textContent = 'Too high!';
+    }
+    attemptsText.textContent = `Attempts left: ${attempts}`;
+    if (attempts === 0) {
+      resultText.textContent = `Game over! The number was ${randomNumber}.`;
+      guessButton.disabled = true;
+    }
+  }
+  guessInput.value = '';
+}
+guessButton.addEventListener('click', checkGuess);
+// quit button
+document.getElementById("exit_btn").addEventListener("click", function() {
+	if (confirm("Are you sure you want to quit?")) {
+		var newFile = "games.html";
+		window.location.href = newFile;
+	}
+});
+
+
+            </script>
+</body>
+</html>

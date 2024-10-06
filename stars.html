@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catch the Falling Stars</title>
+    <!-- <link rel="stylesheet" href="style.css"> -->
+</head>
+<body>
+    <canvas id="gameCanvas"></canvas>
+    <button id="exit_btn">Quit</button>
+
+<style>
+    body, html {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #001f3f;
+}
+
+canvas {
+    border: 2px solid white;
+    background-color: black;
+}
+#exit_btn{
+background-color:  #00ffcc; 
+color: black;
+margin-left: 30px;
+margin-top: 700px;
+/* padding: 10px 30px;
+border: none; */
+}
+#exit_btn:hover{
+background-color: #00e6b8;
+}
+button {
+  padding: 15px 30px;
+            background-color: #2e86de;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+</style>
+
+<script>
+    const canvas = document.getElementById('gameCanvas');
+const ctx = canvas.getContext('2d');
+
+canvas.width = 800;
+canvas.height = 600;
+
+const basketWidth = 100;
+const basketHeight = 20;
+const basketSpeed = 7;
+let score = 0;
+let missed = 0;
+let gameOver = false;
+
+const basket = {
+    x: canvas.width / 2 - basketWidth / 2,
+    y: canvas.height - basketHeight - 10,
+    width: basketWidth,
+    height: basketHeight,
+    color: 'green',
+    moveLeft: false,
+    moveRight: false,
+};
+
+const stars = [];
+const starRadius = 10;
+const starSpeed = 3;
+const maxMissedStars = 5;
+
+// Function to draw the basket
+function drawBasket() {
+    ctx.fillStyle = basket.color;
+    ctx.fillRect(basket.x, basket.y, basket.width, basket.height);
+}
+
+// Function to draw stars
+function drawStar(star) {
+    ctx.fillStyle = 'yellow';
+    ctx.beginPath();
+    ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+    ctx.fill();
+}
+
+// Function to update basket position
+function updateBasket() {
+    if (basket.moveLeft && basket.x > 0) {
+        basket.x -= basketSpeed;
+    }
+    if (basket.moveRight && basket.x < canvas.width - basket.width) {
+        basket.x += basketSpeed;
+    }
+}
+
+// Function to update star positions
+function updateStars() {
+    stars.forEach((star, index) => {
+        star.y += starSpeed;
+        if (star.y - star.radius > canvas.height) {
+            // Star missed
+            missed++;
+            stars.splice(index, 1);
+        }
+    });
+}
+
+// Function to spawn stars randomly
+function spawnStars() {
+    if (Math.random() < 0.03) {
+        const starX = Math.random() * (canvas.width - starRadius * 2) + starRadius;
+        stars.push({ x: starX, y: 0, radius: starRadius });
+    }
+}
+
+// Function to check for collisions (catching stars)
+function checkCollisions() {
+    stars.forEach((star, index) => {
+        if (
+            star.x + star.radius > basket.x &&
+            star.x - star.radius < basket.x + basket.width &&
+            star.y + star.radius > basket.y &&
+            star.y - star.radius < basket.y + basket.height
+        ) {
+            score++;
+            stars.splice(index, 1); // Remove caught star
+        }
+    });
+}
+
+// Function to draw score
+function drawScore() {
+    ctx.fillStyle = 'white';
+    ctx.font = '24px Arial';
+    ctx.fillText(`Score: ${score}`, 10, 30);
+    ctx.fillText(`Missed: ${missed}/${maxMissedStars}`, 10, 60);
+}
+
+// Function to draw game over message
+function drawGameOver() {
+    ctx.fillStyle = 'white';
+    ctx.font = '48px Arial';
+    ctx.textAlign = 'center';
+    ctx.fillText('Game Over', canvas.width / 2, canvas.height / 2);
+}
+
+// Game loop
+function gameLoop() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    if (!gameOver) {
+        updateBasket();
+        updateStars();
+        checkCollisions();
+        spawnStars();
+
+        drawBasket();
+        stars.forEach(drawStar);
+        drawScore();
+
+        if (missed >= maxMissedStars) {
+            gameOver = true;
+        }
+
+        requestAnimationFrame(gameLoop);  // Continue the game loop
+    } else {
+        drawGameOver();
+    }
+}
+
+// Event listeners for basket movement
+document.addEventListener('keydown', (event) => {
+    if (event.key === 'ArrowLeft') {
+        basket.moveLeft = true;
+    } else if (event.key === 'ArrowRight') {
+        basket.moveRight = true;
+    }
+});
+
+document.addEventListener('keyup', (event) => {
+    if (event.key === 'ArrowLeft') {
+        basket.moveLeft = false;
+    } else if (event.key === 'ArrowRight') {
+        basket.moveRight = false;
+    }
+});
+
+// Start the game loop
+gameLoop();
+
+
+ // quit button
+ document.getElementById("exit_btn").addEventListener("click", function() {
+	if (confirm("Are you sure you want to quit?")) {
+		var newFile = "games.html";
+		window.location.href = newFile;
+	}
+});
+</script>
+</body>
+</html>
